@@ -1,0 +1,16 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task: runserver
+
+  runserver:
+    desc: Runs Django's lightweight web server for development
+    env:
+      SECRET_KEY: secret
+      DEBUG: True
+    cmds:
+      - python manage.py runserver

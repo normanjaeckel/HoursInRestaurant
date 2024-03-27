@@ -1,0 +1,12 @@
+# Patterns of intentionally untracked files that Git should ignore
+
+db.sqlite3
+__pycache__/
+
+# Direnv and Devenv
+.direnv
+.devenv*
+devenv.local.nix
+
+# pre-commit
+.pre-commit-config.yaml
