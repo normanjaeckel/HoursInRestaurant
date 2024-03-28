@@ -1,7 +1,8 @@
 import datetime
 
-from django.db import models
 from django.contrib import admin
+from django.db import models
+
 
 class Employee(models.Model):
     last_name = models.CharField(max_length=255, verbose_name="Nachname")
@@ -61,4 +62,3 @@ class Sheet(models.Model):
         break_time = datetime.timedelta(minutes=self.break_time)
         delta = end - begin - break_time
         return round(delta.total_seconds() / 3600, 2)
-

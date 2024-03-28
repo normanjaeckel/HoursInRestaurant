@@ -1,18 +1,20 @@
 # https://docs.djangoproject.com/en/5.0/ref/contrib/admin/
 
 from django.contrib import admin
+
 from .models import Employee, Sheet, Volume
 
 
 class SheetAdmin(admin.ModelAdmin):
     list_display = [
-        'source',
-        'employee',
-        'date',
-        'time',
-        'break_time_display',
-        'total',
+        "source",
+        "employee",
+        "date",
+        "time",
+        "break_time_display",
+        "total",
     ]
+
 
 class AdminSite(admin.AdminSite):
     site_header = "Auswertung der Ermittlungsakten"
