@@ -2,17 +2,25 @@
 
 from django.contrib import admin
 
-from .models import Employee, Sheet, Volume
+from .models import Employee, Sheet, Staff, Volume, WorkingDay, Restaurant
 
 
 class SheetAdmin(admin.ModelAdmin):
     list_display = [
         "source",
         "employee",
+        "months",
+    ]
+
+
+class WorkingDayAdmin(admin.ModelAdmin):
+    list_display = [
         "date",
+        "employee",
         "time",
         "break_time_display",
         "total",
+        "sheet",
     ]
 
 
@@ -27,3 +35,6 @@ admin_site = AdminSite()
 admin_site.register(Employee)
 admin_site.register(Volume)
 admin_site.register(Sheet, SheetAdmin)
+admin_site.register(WorkingDay, WorkingDayAdmin)
+admin_site.register(Restaurant)
+admin_site.register(Staff)
