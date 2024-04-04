@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 
-from .models import Employee, Sheet, Staff, Volume, WorkingDay, Restaurant
+from .models import Employee, Restaurant, Sheet, Staff, Volume, WorkingDay
 
 
 class SheetAdmin(admin.ModelAdmin):
