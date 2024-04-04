@@ -125,4 +125,4 @@ class Staff(models.Model):
         verbose_name_plural = "Mitarbeiter"
 
     def __str__(self):
-        return f"{self.restaurant} {self.begin.strftime("%H:%M")} – {self.end.strftime("%H:%M")}"
+        return f"{self.restaurant} {self.begin.strftime('%H:%M')} – {self.end.strftime('%H:%M')}"
