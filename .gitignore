@@ -1,6 +1,7 @@
 # Patterns of intentionally untracked files that Git should ignore
 
 db.sqlite3
+static/
 __pycache__/
 
 # Direnv and Devenv
