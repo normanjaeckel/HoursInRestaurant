@@ -5,10 +5,18 @@ from django.contrib import admin
 from .models import Employee, Restaurant, Sheet, Staff, Volume, WorkingDay
 
 
+class EmployeeAdmin(admin.ModelAdmin):
+    list_display = [
+        "__str__",
+        "sheet_list",
+    ]
+
+
 class SheetAdmin(admin.ModelAdmin):
     list_display = [
         "source",
         "employee",
+        "hours",
         "months",
     ]
 
@@ -32,7 +40,7 @@ class AdminSite(admin.AdminSite):
 
 admin_site = AdminSite()
 
-admin_site.register(Employee)
+admin_site.register(Employee, EmployeeAdmin)
 admin_site.register(Volume)
 admin_site.register(Sheet, SheetAdmin)
 admin_site.register(WorkingDay, WorkingDayAdmin)

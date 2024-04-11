@@ -1,5 +1,5 @@
 import datetime
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 
 from django.contrib import admin
 from django.db import models
@@ -16,6 +16,16 @@ class Employee(models.Model):
 
     def __str__(self):
         return " ".join([self.first_name, self.last_name])
+
+    @admin.display(description="Stundenzettel")
+    def sheet_list(self):
+        all_sheets = defaultdict(list)
+        for sheet in self.sheets.all():
+            all_sheets[sheet.volume].append(sheet.page)
+        result = []
+        for k, v in all_sheets.items():
+            result.append(f"{k} S. {", ".join(v)}")
+        return "; ".join(result)
 
 
 class Volume(models.Model):
@@ -35,7 +45,10 @@ class Sheet(models.Model):
     )
     page = models.CharField(max_length=255, verbose_name="Seite")
     employee = models.ForeignKey(
-        Employee, on_delete=models.PROTECT, verbose_name="Arbeitnehmer/in"
+        Employee,
+        on_delete=models.PROTECT,
+        verbose_name="Arbeitnehmer/in",
+        related_name="sheets",
     )
 
     class Meta:
@@ -48,6 +61,13 @@ class Sheet(models.Model):
     @admin.display(description="Fundstelle")
     def source(self):
         return f"{self.volume} Seite {self.page}"
+
+    @admin.display(description="Stunden")
+    def hours(self):
+        total = 0
+        for wd in self.working_days.all():
+            total += wd.total()
+        return total
 
     @admin.display(description="Monate")
     def months(self):
