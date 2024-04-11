@@ -24,7 +24,7 @@ class Employee(models.Model):
             all_sheets[sheet.volume].append(sheet.page)
         result = []
         for k, v in all_sheets.items():
-            result.append(f"{k} S. {', '.join(v)}")
+            result.append(f"{k} {', '.join(v)}")
         return "; ".join(result)
 
 
@@ -60,7 +60,7 @@ class Sheet(models.Model):
 
     @admin.display(description="Fundstelle")
     def source(self):
-        return f"{self.volume} Seite {self.page}"
+        return f"{self.volume} {self.page}"
 
     @admin.display(description="Stunden")
     def hours(self):
