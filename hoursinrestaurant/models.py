@@ -24,7 +24,7 @@ class Employee(models.Model):
             all_sheets[sheet.volume].append(sheet.page)
         result = []
         for k, v in all_sheets.items():
-            result.append(f"{k} S. {", ".join(v)}")
+            result.append(f"{k} S. {', '.join(v)}")
         return "; ".join(result)
 
 
