@@ -18,7 +18,9 @@ Including another URLconf
 from django.urls import path
 
 from .admin import admin_site
+from .views import Overview
 
 urlpatterns = [
+    path("views", Overview.as_view()),
     path("", admin_site.urls),
 ]

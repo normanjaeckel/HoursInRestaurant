@@ -1,0 +1,23 @@
+<dl>
+    {% for day, elements in days %}
+    <dt>{{ day }}</dt>
+    <dd>
+        <p>Arbeitnehmer laut Stundennachweisen</p>
+        <p>
+        <ul>
+            {% for hour in elements.hours %}
+            <li> {{ hour.begin }} Uhr – {{ hour.end }} Uhr: {{ hour.employee }} ({{hour.sheet.source}})</li>
+            {% endfor %}
+        </ul>
+        </p>
+        <p>Bedarf an Mitarbeitern insgesamt</p>
+        <p>
+        <ul>
+            {% for staff in elements.staffs %}
+            <li>{{ staff }}</li>
+            {% endfor %}
+        </ul>
+        </p>
+    </dd>
+    {% endfor %}
+</dl>

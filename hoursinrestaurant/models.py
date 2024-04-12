@@ -127,10 +127,16 @@ class Restaurant(models.Model):
     def __str__(self):
         return self.name
 
+    def staff_at_date(self, date):
+        return list(self.staffs.all())
+
 
 class Staff(models.Model):
     restaurant = models.ForeignKey(
-        Restaurant, on_delete=models.PROTECT, verbose_name="Restaurant"
+        Restaurant,
+        on_delete=models.PROTECT,
+        verbose_name="Restaurant",
+        related_name="staffs",
     )
     begin = models.TimeField(verbose_name="Beginn der Arbeitszeit")
     end = models.TimeField(verbose_name="Ende der Arbeitszeit")
@@ -145,4 +151,4 @@ class Staff(models.Model):
         verbose_name_plural = "Mitarbeiter"
 
     def __str__(self):
-        return f"{self.restaurant} {self.begin.strftime('%H:%M')} – {self.end.strftime('%H:%M')}"
+        return f"{self.restaurant} {self.begin.strftime('%H:%M')} Uhr – {self.end.strftime('%H:%M')} Uhr"
