@@ -1,13 +1,14 @@
 from collections import defaultdict
 from typing import Any
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import formats
 from django.views.generic import TemplateView
 
 from .models import Restaurant, WorkingDay
 
 
-class Overview(TemplateView):
+class Overview(LoginRequiredMixin, TemplateView):
     template_name = "overview.html"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
