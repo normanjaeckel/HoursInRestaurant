@@ -23,5 +23,5 @@ class Overview(LoginRequiredMixin, TemplateView):
             for re in Restaurant.objects.all():
                 days[day]["staffs"].extend(re.staff_at_date(days[day]["date_obj"]))
 
-        context["days"] = days.items()
+        context["days"] = sorted(days.items(), key=lambda t: t[0])
         return context
