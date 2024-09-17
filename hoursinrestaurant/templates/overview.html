@@ -10,11 +10,11 @@
             {% endfor %}
         </ul>
         </p>
-        <p>Bedarf an Mitarbeitern insgesamt</p>
+        <p>Bedarf an Mitarbeitern insgesamt (inkl. Inhaber und Angehörige)</p>
         <p>
         <ul>
             {% for staff in elements.staffs %}
-            <li>{{ staff }}</li>
+            <li>{{ staff.restaurant }}: {{ staff.hours }} Personenstunden ({{ staff.pk }})</li>
             {% endfor %}
         </ul>
         </p>

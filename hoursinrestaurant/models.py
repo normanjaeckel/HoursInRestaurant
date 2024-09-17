@@ -128,27 +128,43 @@ class Restaurant(models.Model):
         return self.name
 
     def staff_at_date(self, date):
-        return list(self.staffs.all())
+        weekday = str(date.weekday()+1)
+        return list(self.staffs.filter(begin__lte=date, end__gte=date, weekday=weekday))
 
 
 class Staff(models.Model):
+    MONDAY = "1"
+    TUESDAY = "2"
+    WEDNESDAY = "3"
+    THURSDAY = "4"
+    FRIDAY = "5"
+    SATURDAY = "6"
+    SUNDAY = "7"
+    WEEKDAY_CHOICES = {
+        MONDAY: "Montag",
+        TUESDAY: "Dienstag",
+        WEDNESDAY: "Mittwoch",
+        THURSDAY: "Donnerstag",
+        FRIDAY: "Freitag",
+        SATURDAY: "Sonnabend",
+        SUNDAY: "Sonntag",
+    }
+
     restaurant = models.ForeignKey(
         Restaurant,
         on_delete=models.PROTECT,
         verbose_name="Restaurant",
         related_name="staffs",
     )
-    begin = models.TimeField(verbose_name="Beginn der Arbeitszeit")
-    end = models.TimeField(verbose_name="Ende der Arbeitszeit")
-    # weekdays
-    # date_from
-    # date_until
-    # additional_days
-    # excluded_days
+    weekday = models.CharField(max_length=1, verbose_name="Wochentag", choices=WEEKDAY_CHOICES)
+    begin = models.DateField(verbose_name="Gültig von")
+    end = models.DateField(verbose_name="Gültig bis")
+    opening = models.CharField(max_length=255, verbose_name="Öffnungszeiten", blank=True)
+    hours = models.FloatField(verbose_name="Personenstunden")
 
     class Meta:
-        verbose_name = "Mitarbeiter"
-        verbose_name_plural = "Mitarbeiter"
+        verbose_name = "Mitarbeiterbedarf"
+        verbose_name_plural = "Mitarbeiterbedarf"
 
     def __str__(self):
-        return f"{self.restaurant} {self.begin.strftime('%H:%M')} Uhr – {self.end.strftime('%H:%M')} Uhr"
+        return f"{self.restaurant} · {self.get_weekday_display()} ({formats.date_format(self.begin)} – {formats.date_format(self.end)}) {self.opening} · {self.hours} Personenstunden"
