@@ -26,6 +26,6 @@ class Command(BaseCommand):
             re = Restaurant.objects.get(name=row["Restaurant"])
             we = WEEKDAY_MAP[row["Wochentag"]]
             begin = datetime.datetime.strptime(row["Gültig von"], "%Y-%m-%d").date()
-            end = datetime.datetime.strptime(row["Gültig bis"] or row["Gültig von"], "%Y-%m-%d").date()  # TODO
-            Staff.objects.create(restaurant=re, weekday=we, begin=begin, end=end, opening=row["Öffnungszeiten"], hours=row["Personenstunden"] or 0)  # TODO
+            end = datetime.datetime.strptime(row["Gültig bis"], "%Y-%m-%d").date()
+            Staff.objects.create(restaurant=re, weekday=we, begin=begin, end=end, opening=row["Öffnungszeiten"], hours=row["Personenstunden"])
 

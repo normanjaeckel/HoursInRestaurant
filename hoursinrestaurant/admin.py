@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 
-from .models import Employee, Restaurant, Sheet, Staff, Volume, WorkingDay
+from .models import Employee, Remarks, Restaurant, Sheet, Staff, Volume, WorkingDay
 
 
 class EmployeeAdmin(admin.ModelAdmin):
@@ -44,5 +44,6 @@ admin_site.register(Employee, EmployeeAdmin)
 admin_site.register(Volume)
 admin_site.register(Sheet, SheetAdmin)
 admin_site.register(WorkingDay, WorkingDayAdmin)
+admin_site.register(Remarks)
 admin_site.register(Restaurant)
 admin_site.register(Staff)

@@ -168,3 +168,13 @@ class Staff(models.Model):
 
     def __str__(self):
         return f"{self.restaurant} · {self.get_weekday_display()} ({formats.date_format(self.begin)} – {formats.date_format(self.end)}) {self.opening} · {self.hours} Personenstunden"
+
+class Remarks(models.Model):
+    text = models.TextField(verbose_name="Text", help_text="Leerzeilen erzeugen Absätze")
+
+    class Meta:
+        verbose_name = "Vorbemerkung"
+        verbose_name_plural = "Vorbemerkungen"
+
+    def __str__(self):
+        return f"Vorbemerkung {self.pk}"

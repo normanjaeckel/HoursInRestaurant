@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import formats
 from django.views.generic import TemplateView
 
-from .models import Restaurant, WorkingDay
+from .models import Remarks, Restaurant, WorkingDay
 
 
 class Overview(LoginRequiredMixin, TemplateView):
@@ -24,4 +24,7 @@ class Overview(LoginRequiredMixin, TemplateView):
                 days[day]["staffs"].extend(re.staff_at_date(days[day]["date_obj"]))
 
         context["days"] = sorted(days.items(), key=lambda t: t[1]["date_obj"])
+
+        remarks = [remark.text for remark in Remarks.objects.all()]
+        context["remarks"] = "\n\n".join(remarks)
         return context

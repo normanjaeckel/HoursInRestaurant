@@ -1,23 +1,55 @@
-<dl>
-    {% for day, elements in days %}
-    <dt>{{ day }}</dt>
-    <dd>
-        <p>Arbeitnehmer laut Stundennachweisen</p>
-        <p>
-        <ul>
-            {% for hour in elements.hours %}
-            <li> {{ hour.begin }} Uhr – {{ hour.end }} Uhr: {{ hour.employee }} ({{hour.sheet.source}})</li>
-            {% endfor %}
-        </ul>
-        </p>
-        <p>Bedarf an Mitarbeitern insgesamt (inkl. Inhaber und Angehörige)</p>
-        <p>
-        <ul>
-            {% for staff in elements.staffs %}
-            <li>{{ staff.restaurant }}: {{ staff.hours }} Personenstunden ({{ staff.pk }})</li>
-            {% endfor %}
-        </ul>
-        </p>
-    </dd>
-    {% endfor %}
-</dl>
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Auswertung der Ermittlungsakten</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            color: #555;
+        }
+
+        h2 {
+            margin-top: 2em;
+        }
+
+        dt {
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Auswertung der Ermittlungsakten</h1>
+
+    <h2>Vorbemerkungen</h2>
+    {{ remarks|linebreaks }}
+
+    <h2>Auswertung der einzelnen Tage</h2>
+    <dl>
+        {% for day, elements in days %}
+        <dt>{{ day }}</dt>
+        <dd>
+            <p>Arbeitnehmer laut Stundennachweisen</p>
+            <p>
+            <ul>
+                {% for hour in elements.hours %}
+                <li> {{ hour.begin }} Uhr – {{ hour.end }} Uhr: {{ hour.employee }} ({{hour.sheet.source}})</li>
+                {% endfor %}
+            </ul>
+            </p>
+            <p>Bedarf an Mitarbeitern insgesamt (inkl. Inhaber und Angehörige)</p>
+            <p>
+            <ul>
+                {% for staff in elements.staffs %}
+                <li>{{ staff.restaurant }}: {{ staff.hours }} Personenstunden <small>(Id: {{ staff.pk }})</small></li>
+                {% endfor %}
+            </ul>
+            </p>
+        </dd>
+        {% endfor %}
+    </dl>
+</body>
+
+</html>
