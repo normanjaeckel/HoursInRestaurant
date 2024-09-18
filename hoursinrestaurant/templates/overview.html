@@ -35,16 +35,27 @@
             <p>
             <ul>
                 {% for hour in elements.hours %}
-                <li> {{ hour.begin }} Uhr – {{ hour.end }} Uhr: {{ hour.employee }} ({{hour.sheet.source}})</li>
+                <li> {{ hour.begin }} Uhr – {{ hour.end }} Uhr (Pause {{ hour.break_time }} Min.): {{ hour.employee }}
+                    ({{hour.sheet.source}})</li>
                 {% endfor %}
+                <li style="margin-top: 0.5em; margin-left: -1em; list-style-type: none;">
+                    Summe: {{ elements.hours_total }} Personenstunden</li>
             </ul>
             </p>
-            <p>Bedarf an Mitarbeitern insgesamt (inkl. Inhaber und Angehörige)</p>
+            <p>Mitarbeit durch Inhaber und Angehörige (durchschnittliche Angabe)</p>
+            <p style="padding-left: 1.5em;">Summe: {{ elements.coworking_total }} Personenstunden</p>
+            <p>Gesamtstunden für Arbeitnehmer sowie Inhaber und Angehörige</p>
+            <p style="padding-left: 1.5em;">
+                Summe: {{ elements.work_total }} Personenstunden
+            </p>
+            <p>Bedarf an Mitarbeitern insgesamt</p>
             <p>
             <ul>
                 {% for staff in elements.staffs %}
-                <li>{{ staff.restaurant }}: {{ staff.hours }} Personenstunden <small>(Id: {{ staff.pk }})</small></li>
+                <li>{{ staff.restaurant }}: {{ staff.hours }} Personenstunden <small>(#{{ staff.pk }})</small></li>
                 {% endfor %}
+                <li style="margin-top: 0.5em; margin-left: -1em; list-style-type: none;">
+                    Summe: {{ elements.staff_total }} Personenstunden</li>
             </ul>
             </p>
         </dd>

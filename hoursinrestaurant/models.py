@@ -117,6 +117,20 @@ class WorkingDay(models.Model):
         return round(delta.total_seconds() / 3600, 2)
 
 
+class Coworking(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Name")
+    begin = models.DateField(verbose_name="Gültig von")
+    end = models.DateField(verbose_name="Gültig bis")
+    hours = models.FloatField(verbose_name="Personenstunden pro Tag")
+
+    class Meta:
+        verbose_name = "Mitarbeit durch Inhaber und Angehörige"
+        verbose_name_plural = "Mitarbeit durch Inhaber und Angehörige"
+
+    def __str__(self):
+        return f"{self.name} · {formats.date_format(self.begin)} – {formats.date_format(self.end)} · {self.hours} Personenstunden pro Tag"
+
+
 class Restaurant(models.Model):
     name = models.CharField(max_length=255, verbose_name="Name")
 
