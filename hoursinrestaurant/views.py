@@ -14,15 +14,18 @@ class Overview(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        days = defaultdict(lambda: {
-            "date_obj": None,
-            "hours": [],
-            "hours_total": 0,
-            "coworking_total": 0,
-            "work_total": 0,
-            "staffs": [],
-            "staff_total": 0
-            })
+        days = defaultdict(
+            lambda: {
+                "date_obj": None,
+                "hours": [],
+                "hours_total": 0,
+                "coworking_total": 0,
+                "work_total": 0,
+                "staffs": [],
+                "staff_total": 0,
+                "conclusio": "",
+            }
+        )
 
         for wd in WorkingDay.objects.all():
             days[formats.date_format(wd.date)]["date_obj"] = wd.date
@@ -32,11 +35,21 @@ class Overview(LoginRequiredMixin, TemplateView):
         for day in days:
             date = days[day]["date_obj"]
             days[day]["coworking_total"] = Coworking.objects.filter(
-                begin__lte=date, end__gte=date).aggregate(Sum("hours", default=0.0))["hours__sum"]
-            days[day]["work_total"] = days[day]["hours_total"] + days[day]["coworking_total"]
+                begin__lte=date, end__gte=date
+            ).aggregate(Sum("hours", default=0.0))["hours__sum"]
+            days[day]["work_total"] = (
+                days[day]["hours_total"] + days[day]["coworking_total"]
+            )
             for re in Restaurant.objects.all():
                 days[day]["staffs"].extend(re.staff_at_date(days[day]["date_obj"]))
-            days[day]["staff_total"] = sum(( staff.hours for staff in days[day]["staffs"]))
+            days[day]["staff_total"] = sum(
+                (staff.hours for staff in days[day]["staffs"])
+            )
+            diff = days[day]["work_total"] - days[day]["staff_total"]
+            if diff > 0:
+                days[day][
+                    "conclusio"
+                ] = f"Der Bedarf wird um {formats.number_format(diff,1)} Personenstunden überschritten."
 
         context["days"] = sorted(days.items(), key=lambda t: t[1]["date_obj"])
 

@@ -14,6 +14,7 @@ WEEKDAY_MAP = {
     "Sonntag": "7",
 }
 
+
 class Command(BaseCommand):
     help = "Mass import of staff from CSV"
 
@@ -27,5 +28,11 @@ class Command(BaseCommand):
             we = WEEKDAY_MAP[row["Wochentag"]]
             begin = datetime.datetime.strptime(row["Gültig von"], "%Y-%m-%d").date()
             end = datetime.datetime.strptime(row["Gültig bis"], "%Y-%m-%d").date()
-            Staff.objects.create(restaurant=re, weekday=we, begin=begin, end=end, opening=row["Öffnungszeiten"], hours=row["Personenstunden"])
-
+            Staff.objects.create(
+                restaurant=re,
+                weekday=we,
+                begin=begin,
+                end=end,
+                opening=row["Öffnungszeiten"],
+                hours=row["Personenstunden"],
+            )

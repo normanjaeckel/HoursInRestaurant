@@ -142,7 +142,7 @@ class Restaurant(models.Model):
         return self.name
 
     def staff_at_date(self, date):
-        weekday = str(date.weekday()+1)
+        weekday = str(date.weekday() + 1)
         return list(self.staffs.filter(begin__lte=date, end__gte=date, weekday=weekday))
 
 
@@ -170,10 +170,14 @@ class Staff(models.Model):
         verbose_name="Restaurant",
         related_name="staffs",
     )
-    weekday = models.CharField(max_length=1, verbose_name="Wochentag", choices=WEEKDAY_CHOICES)
+    weekday = models.CharField(
+        max_length=1, verbose_name="Wochentag", choices=WEEKDAY_CHOICES
+    )
     begin = models.DateField(verbose_name="Gültig von")
     end = models.DateField(verbose_name="Gültig bis")
-    opening = models.CharField(max_length=255, verbose_name="Öffnungszeiten", blank=True)
+    opening = models.CharField(
+        max_length=255, verbose_name="Öffnungszeiten", blank=True
+    )
     hours = models.FloatField(verbose_name="Personenstunden")
 
     class Meta:
@@ -183,8 +187,11 @@ class Staff(models.Model):
     def __str__(self):
         return f"{self.restaurant} · {self.get_weekday_display()} ({formats.date_format(self.begin)} – {formats.date_format(self.end)}) {self.opening} · {self.hours} Personenstunden"
 
+
 class Remarks(models.Model):
-    text = models.TextField(verbose_name="Text", help_text="Leerzeilen erzeugen Absätze")
+    text = models.TextField(
+        verbose_name="Text", help_text="Leerzeilen erzeugen Absätze"
+    )
 
     class Meta:
         verbose_name = "Vorbemerkung"

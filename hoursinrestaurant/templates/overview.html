@@ -21,6 +21,10 @@
         dt:not(:first-child) {
             margin-top: 2em;
         }
+
+        div.indent {
+            margin-left: 1.5em;
+        }
     </style>
 </head>
 
@@ -35,23 +39,24 @@
         {% for day, elements in days %}
         <dt>{{ day }}</dt>
         <dd>
-            <p>Arbeitnehmer laut Stundennachweisen</p>
-            <p>
-            <ul>
-                {% for hour in elements.hours %}
-                <li> {{ hour.begin }} Uhr – {{ hour.end }} Uhr (Pause {{ hour.break_time }} Min.): {{ hour.employee }}
-                    ({{hour.sheet.source}})</li>
-                {% endfor %}
-                <li style="margin-top: 0.5em; margin-left: -1em; list-style-type: none;">
-                    Summe: {{ elements.hours_total|floatformat:1 }} Personenstunden</li>
-            </ul>
-            </p>
-            <p>Mitarbeit durch Inhaber und Angehörige (durchschnittliche Angabe)</p>
-            <p style="padding-left: 1.5em;">Summe: {{ elements.coworking_total|floatformat:1 }} Personenstunden</p>
-            <p>Gesamtstunden für Arbeitnehmer sowie Inhaber und Angehörige</p>
-            <p style="padding-left: 1.5em;">
-                Summe: {{ elements.work_total|floatformat:1 }} Personenstunden
-            </p>
+            <p>Tatsächliche Arbeitsstunden</p>
+            <div class="indent">
+                <p>Arbeitnehmer laut Stundennachweisen</p>
+                <p>
+                <ul>
+                    {% for hour in elements.hours %}
+                    <li> {{ hour.begin }} Uhr – {{ hour.end }} Uhr
+                        (Pause {{ hour.break_time }} Min.): {{ hour.employee }}
+                        ({{hour.sheet.source}})</li>
+                    {% endfor %}
+                    <li style="margin-top: 0.5em; margin-left: -1em; list-style-type: none;">
+                        Summe: {{ elements.hours_total|floatformat:1 }} Personenstunden</li>
+                </ul>
+                </p>
+                <p>Mitarbeit durch Inhaber und Angehörige (durchschnittliche Angabe)</p>
+                <p style="padding-left: 1.5em;">Summe: {{ elements.coworking_total|floatformat:1 }} Personenstunden</p>
+                <p>Gesamt: {{ elements.work_total|floatformat:1 }} Personenstunden</p>
+            </div>
             <p>Bedarf an Mitarbeitern insgesamt</p>
             <p>
             <ul>
@@ -62,6 +67,7 @@
                     Summe: {{ elements.staff_total|floatformat:1 }} Personenstunden</li>
             </ul>
             </p>
+            <p><strong>{{ elements.conclusio }}</strong></p>
         </dd>
         {% endfor %}
     </dl>

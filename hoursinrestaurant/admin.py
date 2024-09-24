@@ -2,7 +2,16 @@
 
 from django.contrib import admin
 
-from .models import Coworking, Employee, Remarks, Restaurant, Sheet, Staff, Volume, WorkingDay
+from .models import (
+    Coworking,
+    Employee,
+    Remarks,
+    Restaurant,
+    Sheet,
+    Staff,
+    Volume,
+    WorkingDay,
+)
 
 
 class EmployeeAdmin(admin.ModelAdmin):
